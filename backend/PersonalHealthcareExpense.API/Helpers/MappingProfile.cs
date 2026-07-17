@@ -5,6 +5,8 @@ using PersonalHealthcareExpense.API.Models;
 using PersonalHealthcareExpense.API.DTOs.Income;
 using PersonalHealthcareExpense.API.DTOs.Healthcare;
 using PersonalHealthcareExpense.API.DTOs.Medicine;
+using PersonalHealthcareExpense.API.DTOs.Budget;
+using PersonalHealthcareExpense.API.DTOs.ActivityLog;
 
 namespace PersonalHealthcareExpense.API.Helpers
 {
@@ -41,6 +43,14 @@ namespace PersonalHealthcareExpense.API.Helpers
             CreateMap<AddMedicineDTO, Medicine>();
 
             CreateMap<UpdateMedicineDTO, Medicine>();
+
+            // Budget
+            CreateMap<Budget, BudgetDTO>();
+            CreateMap<AddBudgetDTO, Budget>();
+            CreateMap<UpdateBudgetDTO, Budget>();
+
+            // ActivityLog
+            CreateMap<ActivityLog, ActivityLogDTO>();
         }
 
     }

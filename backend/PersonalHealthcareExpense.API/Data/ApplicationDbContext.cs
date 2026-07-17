@@ -19,5 +19,9 @@ namespace PersonalHealthcareExpense.API.Data
         public DbSet<Healthcare> Healthcares { get; set; } = null!;
         
         public DbSet<Medicine> Medicines { get; set; } = null!;
+
+        public DbSet<Budget> Budgets { get; set; } = null!;
+
+        public DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
     }
 }

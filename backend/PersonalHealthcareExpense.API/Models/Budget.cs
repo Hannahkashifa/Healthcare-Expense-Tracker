@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonalHealthcareExpense.API.Models
 {
-    public class Expense
+    public class Budget
     {
         [Key]
-        public int ExpenseId { get; set; }
+        public int BudgetId { get; set; }
 
         [Required]
         public int UserId { get; set; }
@@ -18,15 +18,14 @@ namespace PersonalHealthcareExpense.API.Models
         public string Category { get; set; } = string.Empty;
 
         [Required]
-        public decimal Amount { get; set; }
+        public decimal MonthlyLimit { get; set; }
 
         [Required]
-        public DateTime ExpenseDate { get; set; }
+        public int Month { get; set; }
 
-        public string? Description { get; set; }
+        [Required]
+        public int Year { get; set; }
 
-        public bool IsRecurring { get; set; }
-
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

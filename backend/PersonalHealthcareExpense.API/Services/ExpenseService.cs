@@ -64,6 +64,7 @@ namespace PersonalHealthcareExpense.API.Services
             expense.Amount = dto.Amount;
             expense.ExpenseDate = dto.ExpenseDate;
             expense.Description = dto.Description;
+            expense.IsRecurring = dto.IsRecurring;
 
             await _repository.UpdateExpenseAsync(expense);
             await _repository.SaveAsync();

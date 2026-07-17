@@ -11,5 +11,7 @@
         public DateTime ExpenseDate { get; set; }
 
         public string? Description { get; set; }
+
+        public bool IsRecurring { get; set; }
     }
 }

@@ -50,6 +50,14 @@ builder.Services.AddScoped<IMedicineService, MedicineService>();
 // Dashboard
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 
+// Budget
+builder.Services.AddScoped<IBudgetRepository, BudgetRepository>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
+
+// ActivityLog
+builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
+builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
+
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

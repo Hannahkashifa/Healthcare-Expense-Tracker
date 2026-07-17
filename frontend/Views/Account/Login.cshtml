@@ -346,6 +346,21 @@
     </style>
 </head>
 <body>
+    <div style="position:fixed;top:15px;right:15px;z-index:100;">
+        <div class="theme-switcher">
+            <button class="theme-btn" id="themeToggle" style="padding:6px 12px;font-size:0.85rem;">
+                <span id="themeToggleText">☀️ Theme</span>
+                <i class="bi bi-chevron-down"></i>
+            </button>
+            <div class="theme-dropdown" id="themeDropdown">
+                <button class="theme-option" data-theme="light"><span class="theme-dot light"></span> ☀️ Light</button>
+                <button class="theme-option" data-theme="dark"><span class="theme-dot dark"></span> 🌙 Dark</button>
+                <button class="theme-option" data-theme="boy"><span class="theme-dot boy"></span> 👦 Boy</button>
+                <button class="theme-option" data-theme="girl"><span class="theme-dot girl"></span> 👧 Girl</button>
+            </div>
+        </div>
+    </div>
+
     <div class="particles">
         <div class="particle"></div>
         <div class="particle"></div>
@@ -395,5 +410,41 @@
             <a asp-action="Register">Register here</a>
         </div>
     </div>
+
+    <script>
+    (function() {
+        var toggle = document.getElementById('themeToggle');
+        var dropdown = document.getElementById('themeDropdown');
+        var toggleText = document.getElementById('themeToggleText');
+
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeText(savedTheme);
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+
+        document.querySelectorAll('.theme-option').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var theme = this.getAttribute('data-theme');
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                updateThemeText(theme);
+                dropdown.classList.remove('show');
+            });
+        });
+
+        document.addEventListener('click', function() {
+            dropdown.classList.remove('show');
+        });
+
+        function updateThemeText(theme) {
+            var labels = { light: '☀️ Light', dark: '🌙 Dark', boy: '👦 Boy', girl: '👧 Girl' };
+            toggleText.textContent = labels[theme] || '☀️ Theme';
+        }
+    })();
+    </script>
 </body>
 </html>
