@@ -418,33 +418,45 @@
         var dropdown = document.getElementById('themeDropdown');
         var toggleText = document.getElementById('themeToggleText');
 
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+            var labels = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
+            toggleText.textContent = labels[theme] || 'Light';
+            var opts = dropdown.querySelectorAll('.theme-option');
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].getAttribute('data-theme') === theme) {
+                    opts[i].classList.add('active');
+                } else {
+                    opts[i].classList.remove('active');
+                }
+            }
+        }
+
         var savedTheme = localStorage.getItem('healthcare-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme === 'light' ? '' : savedTheme);
-        updateThemeText(savedTheme);
+        applyTheme(savedTheme);
 
         toggle.addEventListener('click', function(e) {
             e.stopPropagation();
             dropdown.classList.toggle('show');
         });
 
-        document.querySelectorAll('.theme-option').forEach(function(btn) {
-            btn.addEventListener('click', function() {
+        var options = dropdown.querySelectorAll('.theme-option');
+        for (var i = 0; i < options.length; i++) {
+            options[i].addEventListener('click', function() {
                 var theme = this.getAttribute('data-theme');
-                document.documentElement.setAttribute('data-theme', theme === 'light' ? '' : theme);
                 localStorage.setItem('healthcare-theme', theme);
-                updateThemeText(theme);
+                applyTheme(theme);
                 dropdown.classList.remove('show');
             });
-        });
+        }
 
         document.addEventListener('click', function() {
             dropdown.classList.remove('show');
         });
-
-        function updateThemeText(theme) {
-            var labels = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
-            toggleText.textContent = labels[theme] || 'Light';
-        }
     })();
     </script>
 </body>

@@ -898,41 +898,39 @@ a:hover { color: var(--accent-hover); }
 
 .profile-header {
     background: var(--bg-sidebar);
-    padding: 40px 20px;
+    padding: 32px 20px;
     text-align: center;
     color: #fff;
 }
 
 .profile-avatar {
-    width: 88px;
-    height: 88px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 12px;
-    font-size: 2.2rem;
+    font-size: 2rem;
     font-weight: 700;
     color: #fff;
     border: 3px solid rgba(255,255,255,0.25);
     animation: bounceIn 0.5s ease;
 }
 
-.profile-body { padding: 28px; }
-
-.profile-info-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 16px;
+.profile-body {
+    padding: 24px 20px;
 }
 
-.profile-info-row:last-child { border-bottom: none; }
-.profile-info-label { color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; min-width: 140px; }
-.profile-info-value { color: var(--text-primary); font-weight: 600; }
+.profile-body .form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.profile-body .row.g-3 > [class*="col-"] {
+    margin-bottom: 0;
+}
 
 /* =====================================================
    TOASTS
@@ -1095,11 +1093,10 @@ a:hover { color: var(--accent-hover); }
         padding-left: 44px;
     }
 
-    .profile-info-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-    }
+    .profile-header { padding: 24px 16px; }
+    .profile-avatar { width: 64px; height: 64px; font-size: 1.6rem; }
+    .profile-body { padding: 20px 16px; }
+    .profile-body .btn { width: 100%; }
 }
 
 /* =====================================================

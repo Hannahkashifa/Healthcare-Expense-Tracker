@@ -10,46 +10,52 @@ function getTheme() {
 }
 
 function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme === 'light' ? '' : theme);
+    if (theme === 'light') {
+        document.documentElement.removeAttribute('data-theme');
+    } else {
+        document.documentElement.setAttribute('data-theme', theme);
+    }
     localStorage.setItem('healthcare-theme', theme);
-    document.querySelectorAll('.theme-option').forEach(o => {
-        o.classList.toggle('active', o.dataset.theme === theme);
+    document.querySelectorAll('.theme-option').forEach(function(o) {
+        o.classList.toggle('active', o.getAttribute('data-theme') === theme);
     });
-    const btn = document.getElementById('themeToggleText');
+    var btn = document.getElementById('themeToggleText');
     if (btn) {
-        const icons = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
-        btn.textContent = icons[theme] || 'Light';
+        var labels = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
+        btn.textContent = labels[theme] || 'Light';
     }
 }
 
 function initTheme() {
-    const saved = getTheme();
+    var saved = getTheme();
     setTheme(saved);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     initTheme();
 
-    const themeBtn = document.getElementById('themeToggle');
-    const themeDrop = document.getElementById('themeDropdown');
+    var themeBtn = document.getElementById('themeToggle');
+    var themeDrop = document.getElementById('themeDropdown');
     if (themeBtn && themeDrop) {
         themeBtn.addEventListener('click', function(e) {
             e.stopPropagation();
+            var nd = document.getElementById('notifDropdown');
+            if (nd) nd.classList.remove('show');
             themeDrop.classList.toggle('show');
-            document.getElementById('notifDropdown').classList.remove('show');
         });
 
-        document.querySelectorAll('.theme-option').forEach(opt => {
-            opt.addEventListener('click', function() {
-                setTheme(this.dataset.theme);
+        var options = themeDrop.querySelectorAll('.theme-option');
+        for (var i = 0; i < options.length; i++) {
+            options[i].addEventListener('click', function() {
+                setTheme(this.getAttribute('data-theme'));
                 themeDrop.classList.remove('show');
             });
-        });
+        }
     }
 
     document.addEventListener('click', function() {
         if (themeDrop) themeDrop.classList.remove('show');
-        const nd = document.getElementById('notifDropdown');
+        var nd = document.getElementById('notifDropdown');
         if (nd) nd.classList.remove('show');
     });
 });
