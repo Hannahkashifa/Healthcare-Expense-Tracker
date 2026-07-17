@@ -58,6 +58,12 @@ builder.Services.AddScoped<IBudgetService, BudgetService>();
 builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
 builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
 
+// Password Reset Token
+builder.Services.AddScoped<IPasswordResetTokenRepository, PasswordResetTokenRepository>();
+
+// Email
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

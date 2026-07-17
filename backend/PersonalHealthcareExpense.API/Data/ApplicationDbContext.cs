@@ -23,5 +23,7 @@ namespace PersonalHealthcareExpense.API.Data
         public DbSet<Budget> Budgets { get; set; } = null!;
 
         public DbSet<ActivityLog> ActivityLogs { get; set; } = null!;
+
+        public DbSet<PasswordResetToken> PasswordResetTokens { get; set; } = null!;
     }
 }
