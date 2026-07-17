@@ -53,7 +53,7 @@ namespace PersonalHealthcareExpense.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Expenses");
+                    b.ToTable("Expenses", (string)null);
                 });
 
             modelBuilder.Entity("PersonalHealthcareExpense.API.Models.Healthcare", b =>
@@ -92,7 +92,7 @@ namespace PersonalHealthcareExpense.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Healthcares");
+                    b.ToTable("Healthcares", (string)null);
                 });
 
             modelBuilder.Entity("PersonalHealthcareExpense.API.Models.Income", b =>
@@ -126,7 +126,7 @@ namespace PersonalHealthcareExpense.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Incomes");
+                    b.ToTable("Incomes", (string)null);
                 });
 
             modelBuilder.Entity("PersonalHealthcareExpense.API.Models.Medicine", b =>
@@ -137,8 +137,8 @@ namespace PersonalHealthcareExpense.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MedicineId"), 1L, 1);
 
-                    b.Property<string>("Dosage")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AfternoonDose")
+                        .HasColumnType("int");
 
                     b.Property<int>("DurationInDays")
                         .HasColumnType("int");
@@ -150,6 +150,12 @@ namespace PersonalHealthcareExpense.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MorningDose")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NightDose")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -157,7 +163,7 @@ namespace PersonalHealthcareExpense.API.Migrations
 
                     b.HasIndex("HealthcareId");
 
-                    b.ToTable("Medicines");
+                    b.ToTable("Medicines", (string)null);
                 });
 
             modelBuilder.Entity("PersonalHealthcareExpense.API.Models.User", b =>
@@ -194,7 +200,7 @@ namespace PersonalHealthcareExpense.API.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("PersonalHealthcareExpense.API.Models.Expense", b =>
