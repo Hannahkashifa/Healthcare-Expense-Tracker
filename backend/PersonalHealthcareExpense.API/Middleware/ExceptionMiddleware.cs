@@ -27,7 +27,7 @@ namespace PersonalHealthcareExpense.API.Middleware
                 {
                     StatusCode = context.Response.StatusCode,
                     Message = "An unexpected error occurred.",
-                    Details = ex.Message
+                    Details = ex.InnerException?.Message ?? ex.Message
                 };
 
                 await context.Response.WriteAsync(
