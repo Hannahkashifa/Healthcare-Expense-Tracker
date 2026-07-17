@@ -22,6 +22,8 @@ namespace PersonalHealthcareExpense.API.Models
 
         public string? Gender { get; set; }
 
+        public string? ProfilePicture { get; set; }
+
         public DateTime CreatedDate { get; set; }
     }
 }

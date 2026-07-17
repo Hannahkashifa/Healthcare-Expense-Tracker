@@ -125,6 +125,53 @@ namespace PersonalHealthcareExpense.API.Controllers
             return Ok("Password changed successfully.");
         }
 
+        [Authorize]
+        [HttpPost("profile-picture")]
+        public async Task<IActionResult> UploadProfilePicture(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("No file uploaded.");
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(ext))
+                return BadRequest("Only JPG, PNG, GIF, and WebP images are allowed.");
+
+            if (file.Length > 5 * 1024 * 1024)
+                return BadRequest("File size must be under 5MB.");
+
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var user = await _repository.GetUserByIdAsync(userId);
+            if (user == null)
+                return NotFound("User not found.");
+
+            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+            if (!Directory.Exists(uploadsDir))
+                Directory.CreateDirectory(uploadsDir);
+
+            if (!string.IsNullOrEmpty(user.ProfilePicture))
+            {
+                var oldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.ProfilePicture.TrimStart('/'));
+                if (System.IO.File.Exists(oldPath))
+                    System.IO.File.Delete(oldPath);
+            }
+
+            var fileName = $"profile_{userId}_{DateTime.UtcNow:yyyyMMddHHmmss}{ext}";
+            var filePath = Path.Combine(uploadsDir, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            user.ProfilePicture = $"/uploads/{fileName}";
+            await _repository.UpdateUserAsync(user);
+            await _repository.SaveAsync();
+
+            return Ok(new { profilePicture = user.ProfilePicture });
+        }
+
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDTO dto)
         {
