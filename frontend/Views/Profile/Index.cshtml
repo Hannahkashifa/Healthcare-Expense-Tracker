@@ -1,5 +1,5 @@
 @model ProfileViewModel
-@{ ViewData["Title"] = "Profile"; }
+@{ ViewData["Title"] = "My Profile"; }
 
 <div class="row justify-content-center">
     <div class="col-lg-8">
@@ -9,7 +9,7 @@
                     @(string.IsNullOrEmpty(Model.FullName) ? "U" : Model.FullName[0].ToString().ToUpper())
                 </div>
                 <h4 class="fw-bold mb-1">@Model.FullName</h4>
-                <p class="text-muted mb-0">@Model.Email</p>
+                <p style="color:rgba(255,255,255,0.7);margin:0">@Model.Email</p>
             </div>
             <div class="profile-body">
                 @if (TempData["Success"] != null)
@@ -27,42 +27,63 @@
                     </div>
                 }
 
-                <form asp-action="Update" method="post" data-loading>
+                <form asp-controller="Profile" asp-action="Update" method="post" data-loading>
                     <div class="profile-info-row">
-                        <label class="form-label fw-semibold">Full Name</label>
-                        <input asp-for="FullName" class="form-control" />
+                        <label class="form-label mb-0">Full Name</label>
+                        <input asp-for="FullName" class="form-control" style="max-width:300px" />
                     </div>
                     <div class="profile-info-row">
-                        <label class="form-label fw-semibold">Email</label>
-                        <input asp-for="Email" class="form-control" readonly style="background:#f0f0f0" />
+                        <label class="form-label mb-0">Email</label>
+                        <input asp-for="Email" class="form-control" readonly style="max-width:300px;background:var(--bg-primary)" />
                     </div>
                     <div class="profile-info-row">
-                        <label class="form-label fw-semibold">Phone Number</label>
-                        <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number" />
+                        <label class="form-label mb-0">Phone Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" style="max-width:300px" placeholder="Enter phone" />
                     </div>
                     <div class="profile-info-row">
-                        <label class="form-label fw-semibold">Date of Birth</label>
-                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        <label class="form-label mb-0">Date of Birth</label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" style="max-width:300px" />
                     </div>
                     <div class="profile-info-row">
-                        <label class="form-label fw-semibold">Gender</label>
-                        <select asp-for="Gender" class="form-select">
-                            <option value="">-- Select --</option>
+                        <label class="form-label mb-0">Gender</label>
+                        <select asp-for="Gender" class="form-select" style="max-width:300px">
+                            <option value="">Select...</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="profile-info-row">
-                        <label class="form-label fw-semibold">Member Since</label>
-                        <p class="mb-0 text-muted">
+                        <label class="form-label mb-0">Member Since</label>
+                        <span style="color:var(--text-secondary);font-size:0.9rem">
                             <i class="bi bi-calendar3 me-1"></i>@Model.CreatedDate.ToString("dd MMMM yyyy")
-                        </p>
+                        </span>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-3">
-                        <i class="bi bi-check-lg me-2"></i>Update Profile
+                    <button type="submit" class="btn btn-primary mt-3">
+                        <i class="bi bi-check-lg me-1"></i> Save Changes
                     </button>
                 </form>
+
+                <div class="password-section">
+                    <h5><i class="bi bi-shield-lock me-2"></i>Change Password</h5>
+                    <form asp-controller="Profile" asp-action="ChangePassword" method="post" data-loading>
+                        <div class="profile-info-row">
+                            <label class="form-label mb-0">Current Password</label>
+                            <input type="password" name="currentPassword" class="form-control" style="max-width:300px" placeholder="Enter current password" required />
+                        </div>
+                        <div class="profile-info-row">
+                            <label class="form-label mb-0">New Password</label>
+                            <input type="password" name="newPassword" class="form-control" style="max-width:300px" placeholder="Enter new password" minlength="6" required />
+                        </div>
+                        <div class="profile-info-row">
+                            <label class="form-label mb-0">Confirm New Password</label>
+                            <input type="password" name="confirmNewPassword" class="form-control" style="max-width:300px" placeholder="Re-enter new password" minlength="6" required />
+                        </div>
+                        <button type="submit" class="btn btn-warning mt-3">
+                            <i class="bi bi-key me-1"></i> Change Password
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

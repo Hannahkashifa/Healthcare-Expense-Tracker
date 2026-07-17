@@ -53,5 +53,33 @@ namespace PersonalHealthcareExpense.Web.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(string currentPassword, string newPassword, string confirmNewPassword)
+        {
+            var token = HttpContext.Session.GetString("Token");
+            if (string.IsNullOrEmpty(token)) return RedirectToAction("Login", "Account");
+
+            if (newPassword != confirmNewPassword)
+            {
+                TempData["Error"] = "New passwords do not match.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var content = new StringContent(
+                JsonSerializer.Serialize(new { currentPassword, newPassword }),
+                System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _api.PostAsync("api/Users/change-password", content);
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["Success"] = "Password changed successfully!";
+            }
+            else
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                TempData["Error"] = string.IsNullOrEmpty(error) ? "Failed to change password. Check your current password." : error;
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

@@ -17,8 +17,8 @@ function setTheme(theme) {
     });
     const btn = document.getElementById('themeToggleText');
     if (btn) {
-        const icons = { light: '☀️ Light', dark: '🌙 Dark', boy: '👦 Boy', girl: '👧 Girl' };
-        btn.textContent = icons[theme] || '☀️ Light';
+        const icons = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
+        btn.textContent = icons[theme] || 'Light';
     }
 }
 
